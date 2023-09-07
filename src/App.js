@@ -24,7 +24,7 @@ const initialState = {
       email: '',
       position: ''
     },
-    route: 'home',
+    route: 'signin',
     newForm: 'hidden',
     profile: 'hidden',
     edit: {
