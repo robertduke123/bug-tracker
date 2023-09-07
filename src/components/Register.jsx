@@ -43,7 +43,7 @@ class Register extends Component{
         console.log(this.state);
         if(this.state.password === this.state.confirmPassword){
         const {firstName, lastName, phone, email, password} = this.state
-        fetch('http://localhost:3000/register', {
+        fetch('https://bug-tracker-backend-jpam.onrender.com/register', {
             method: 'post',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({

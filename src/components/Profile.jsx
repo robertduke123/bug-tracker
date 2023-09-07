@@ -42,7 +42,7 @@ class Profile extends Component {
         let newP = document.querySelector('#newP').value
         let confirm = document.querySelector('#confirm').value
 
-        fetch('http://localhost:3000/signin', {
+        fetch('https://bug-tracker-backend-jpam.onrender.com/signin', {
             method: 'post',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({

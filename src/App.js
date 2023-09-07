@@ -56,7 +56,7 @@ class App extends Component {
   }
 
   loadProjectState = () => {
-    fetch('http://localhost:3000/projects')
+    fetch('https://bug-tracker-backend-jpam.onrender.com/projects')
         .then(res => res.json())
         .then(
             data => {
@@ -68,7 +68,7 @@ class App extends Component {
   }
 
   loadTeamState = () => {
-    fetch('http://localhost:3000/team')
+    fetch('https://bug-tracker-backend-jpam.onrender.com/team')
         .then(res => res.json())
         .then(
             data => {
@@ -139,7 +139,7 @@ class App extends Component {
   }
 
   editUser = (info) => {
-    fetch('http://localhost:3000/edit_team', {
+    fetch('https://bug-tracker-backend-jpam.onrender.com/edit_team', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -160,7 +160,7 @@ class App extends Component {
         let contributor = project.contributor
         contributor.splice(contributor.indexOf(this.state.user.firstName + ' ' + this.state.user.lastName), 1)
         contributor.push(info.firstName + ' ' + info.lastName)
-        fetch('http://localhost:3000/edit_project', {
+        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_project', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -182,7 +182,7 @@ class App extends Component {
         assignedDevs.splice(assignedDevs.indexOf(this.state.user.firstName + ' ' + this.state.user.lastName), 1)
         assignedDevs.push(info.firstName + ' ' + info.lastName)
         
-        fetch('http://localhost:3000/edit_ticket', {
+        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_ticket', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -211,7 +211,7 @@ class App extends Component {
 
   editPassword = (old, newP) => {
     
-    fetch('http://localhost:3000/edit_password', {
+    fetch('https://bug-tracker-backend-jpam.onrender.com/edit_password', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -227,7 +227,7 @@ class App extends Component {
   }
 
   createProject = (projectDetails) => {
-    fetch('http://localhost:3000/projects', {
+    fetch('https://bug-tracker-backend-jpam.onrender.com/projects', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -295,7 +295,7 @@ class App extends Component {
     })
     projectState.contributor = projectMembers
 
-    fetch('http://localhost:3000/edit_project', {
+    fetch('https://bug-tracker-backend-jpam.onrender.com/edit_project', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -319,7 +319,7 @@ class App extends Component {
     let projectState = allProjects[projectIndex]
     let allTickets = projectState.tickets
 
-     fetch('http://localhost:3000/tickets', {
+     fetch('https://bug-tracker-backend-jpam.onrender.com/tickets', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -355,7 +355,7 @@ class App extends Component {
       project = e.target.parentNode.parentNode.firstChild.innerHTML
       let projectIndex = allProjects.findIndex(object => {return object.name === project}) 
 
-      fetch('http://localhost:3000/delete_project', {
+      fetch('https://bug-tracker-backend-jpam.onrender.com/delete_project', {
             method: 'delete',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -375,7 +375,7 @@ class App extends Component {
       let allTickets = allProjects[projectIndex].tickets  
       let ticketIndex = allTickets.findIndex(object => {return object.ticketTitle === ticket})
 
-      fetch('http://localhost:3000/delete_ticket', {
+      fetch('https://bug-tracker-backend-jpam.onrender.com/delete_ticket', {
             method: 'delete',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -398,7 +398,7 @@ class App extends Component {
       let memberIndex = allMembers.indexOf(member)
       allMembers.splice(memberIndex, 1)
 
-      fetch('http://localhost:3000/edit_project', {
+      fetch('https://bug-tracker-backend-jpam.onrender.com/edit_project', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -417,7 +417,7 @@ class App extends Component {
       let allMembers = this.state.team
       let memberIndex = allMembers.findIndex(object => {return object.name === member.name})
 
-      fetch('http://localhost:3000/delete_team', {
+      fetch('https://bug-tracker-backend-jpam.onrender.com/delete_team', {
             method: 'delete',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -441,7 +441,7 @@ class App extends Component {
       if(version === 'project') {
         let projectIndex = allProjects.findIndex(object => {return object.name === this.state.edit.project.name})   
         project = allProjects[projectIndex]
-        fetch('http://localhost:3000/edit_project', {
+        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_project', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -466,7 +466,7 @@ class App extends Component {
         let ticket = allTickets[ticketIndex]
 
 
-        fetch('http://localhost:3000/edit_ticket', {
+        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_ticket', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -498,7 +498,7 @@ class App extends Component {
       let allMembers = this.state.team
       let memberIndex = allMembers.findIndex(object => {return object.firstName === member.firstName})
 
-      fetch('http://localhost:3000/edit_team', {
+      fetch('https://bug-tracker-backend-jpam.onrender.com/edit_team', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -519,7 +519,7 @@ class App extends Component {
         let contributor = project.contributor
         contributor.splice(contributor.indexOf(this.state.loadedMember.firstName + ' ' + this.state.loadedMember.lastName), 1)
         contributor.push(state.firstName + ' ' + state.lastName)
-        fetch('http://localhost:3000/edit_project', {
+        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_project', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -540,7 +540,7 @@ class App extends Component {
         assignedDevs.splice(assignedDevs.indexOf(this.state.loadedMember.firstName + ' ' + this.state.loadedMember.lastName), 1)
         assignedDevs.push(state.firstName + ' ' + state.lastName)
         
-        fetch('http://localhost:3000/edit_ticket', {
+        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_ticket', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -593,7 +593,7 @@ class App extends Component {
     let commentIndex = commentsState.findIndex(object => {return object.comment === deletion})
 
     action === 'add' ? 
-     fetch('http://localhost:3000/comments', {
+     fetch('https://bug-tracker-backend-jpam.onrender.com/comments', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -605,7 +605,7 @@ class App extends Component {
         })
         .then(res => res.json())
         .catch(console.log()) :
-        fetch('http://localhost:3000/delete_comment', {
+        fetch('https://bug-tracker-backend-jpam.onrender.com/delete_comment', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
