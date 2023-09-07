@@ -15,11 +15,8 @@ import './App.css'
 
 // testing git branch
 
-class App extends Component {
-  constructor() {
-    super() 
-    this.state = {
-    user: {
+const initialState = {
+  user: {
       id: '',
       firstName: '',
       lastName: '',
@@ -39,7 +36,12 @@ class App extends Component {
     loadedProject: {},
     loadedTicket: {},
     loadedMember: {}
-  }
+}
+
+class App extends Component {
+  constructor() {
+    super() 
+    this.state = initialState
   }
 
   loadUser = (data) => {
@@ -90,6 +92,9 @@ class App extends Component {
   
 
   routeChange = (route) => {
+    if(route === 'signin') {
+      this.setState(initialState)
+    }
     this.setState({route: route})
   }
 
@@ -147,6 +152,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
     let allProjects = this.state.projects
     allProjects.forEach(project => {
@@ -164,7 +170,8 @@ class App extends Component {
                 newContributor: contributor
             })
         })
-        .then(res => res.json())
+        .then(res => res.json())        
+        .catch(console.log())
 
       }
       project.tickets.forEach(ticket => {
@@ -191,6 +198,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
       }
       })
     })
@@ -213,6 +221,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
     this.setState({profile: 'hidden'})
   }
@@ -228,6 +237,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
     this.setState(prevState => ({
       projects: [...prevState.projects,
@@ -296,6 +306,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
     allProjects[projectIndex] = projectState
     this.setState({projects: allProjects})
@@ -324,6 +335,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
     allTickets.push(newTicket)
     projectState.tickets = allTickets
@@ -351,6 +363,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
       allProjects.splice(projectIndex, 1)
       this.setState({projects: allProjects})
@@ -370,6 +383,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
       allTickets.splice(ticketIndex, 1)
       this.setState({projects: allProjects})
@@ -395,6 +409,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
       this.setState({projects: allProjects})
     } else {
@@ -410,6 +425,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
       allMembers.splice(memberIndex, 1)
 
@@ -436,6 +452,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
         project.name = state.name
         project.description = state.description
@@ -465,6 +482,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
         ticket.ticketTitle = state.ticketTitle
         ticket.author = state.author
@@ -493,6 +511,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
         let allProjects = this.state.projects
     allProjects.forEach(project => {
@@ -511,6 +530,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
       }
       project.tickets.forEach(ticket => {
@@ -536,6 +556,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
       }
       })
     })
@@ -582,7 +603,8 @@ class App extends Component {
                 comment: comment
             })
         })
-        .then(res => res.json()) :
+        .then(res => res.json())
+        .catch(console.log()) :
         fetch('http://localhost:3000/delete_comment', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
@@ -592,6 +614,7 @@ class App extends Component {
             })
         })
         .then(res => res.json())
+        .catch(console.log())
 
     action === 'add' ? 
     commentsState.push({

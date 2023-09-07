@@ -19,20 +19,23 @@ const db = knex({
   }
 });
 
-// console.log(db('projects').select('tickets').where('name', '=', 'r').then(data => console.log(data[0].tickets)))
  
 app.get('/', (req,res) => {
     res.json(db.users)
 })
 
 app.post('/signin', (req, res) => {
+    const {email, password} = req.body
+    if(!email || !password) {
+        res.status(400).json('incorrect form submission')
+    }
     db.select('email', 'hash').from('login')
-    .where('email', '=', req.body.email)
+    .where('email', '=', email)
     .then(data => {
-        const isValid = bcrypt.compareSync(req.body.password, data[0].hash)
+        const isValid = bcrypt.compareSync(password, data[0].hash)
         if(isValid) {
             return db.select('*').from('users')
-            .where('email', '=', req.body.email)
+            .where('email', '=', email)
             .then(user => {
                 res.json(user[0])
             })
@@ -46,6 +49,9 @@ app.post('/signin', (req, res) => {
 
 app.post('/register', (req, res) => {
     const {firstName, lastName, phone, email, password} = req.body
+    if(!email || !firstName || !lastName || !password) {
+        res.status(400).json('incorrect form submission')
+    }
     const hash = bcrypt.hashSync(password)
     db.transaction(trx => {
         trx.insert({
@@ -59,9 +65,9 @@ app.post('/register', (req, res) => {
                 .returning('*')
                 .insert({
                     first_name: firstName,
-                    last_name: loginEmail[0].email,
+                    last_name: lastName,
                     phone: phone,
-                    email: email,
+                    email: loginEmail[0].email,
                     position: 'Employee'
                 })
                 .then(user => {
