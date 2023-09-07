@@ -111,7 +111,6 @@ class App extends Component {
             project: this.state.projects[projectIndex].tickets[ticketIndex],
             state: true
         }})
-        console.log(this.state.edit);
       } else if (control === 'member') {
         let project = document.querySelector('.project-title h1').innerHTML
         this.setState({
@@ -229,7 +228,6 @@ class App extends Component {
             })
         })
         .then(res => res.json())
-        // .then(console.log())
 
     this.setState(prevState => ({
       projects: [...prevState.projects,
@@ -427,7 +425,6 @@ class App extends Component {
       if(version === 'project') {
         let projectIndex = allProjects.findIndex(object => {return object.name === this.state.edit.project.name})   
         project = allProjects[projectIndex]
-        console.log(this.state.edit);
         fetch('http://localhost:3000/edit_project', {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
@@ -451,7 +448,6 @@ class App extends Component {
         let ticketIndex = allTickets.findIndex(object => {return object.ticketTitle === state.ticketTitle})
         let ticket = allTickets[ticketIndex]
 
-        console.log(allTickets, ticketIndex, ticket, state);
 
         fetch('http://localhost:3000/edit_ticket', {
             method: 'put',
@@ -518,10 +514,8 @@ class App extends Component {
 
       }
       project.tickets.forEach(ticket => {
-        console.log(this.state.loadedMember.firstName + ' ' + this.state.loadedMember.lastName, ticket.author);
         if(ticket.author === this.state.loadedMember.firstName + ' ' + this.state.loadedMember.lastName) {
           ticket.author = state.firstName + ' ' + state.lastName
-          console.log(ticket);
           let assignedDevs = ticket.assignedDevs
         assignedDevs.splice(assignedDevs.indexOf(this.state.loadedMember.firstName + ' ' + this.state.loadedMember.lastName), 1)
         assignedDevs.push(state.firstName + ' ' + state.lastName)
