@@ -24,19 +24,14 @@ const initialState = {
       email: '',
       position: ''
     },
-    route: 'Dashboard',
+    route: 'home',
     newForm: 'hidden',
     profile: 'hidden',
     edit: {
       project: '',
       state: false
     },    
-    projects : [{
-      name: 'fgfgf',
-      description: 'fgffggf',
-      contributor: ['r'],
-      tickets: []
-    }],
+    projects : [],
     team: [],
     loadedProject: {},
     loadedTicket: {},
