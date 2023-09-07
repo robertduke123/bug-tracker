@@ -14,7 +14,6 @@ document.onclick = function() {
 
 export default function Dashboard(props) {
 
-    // console.log(props.project);
     
     function edit(e) {
         e.stopPropagation()
@@ -144,7 +143,7 @@ export default function Dashboard(props) {
                     <h2>CONTRIBUTORS</h2>
                 </div>
                 <ul>  
-                    {props.project?
+                    {props.projects?
                     listItems :
                     <div></div>}
                 </ul>

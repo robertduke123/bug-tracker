@@ -24,14 +24,19 @@ const initialState = {
       email: '',
       position: ''
     },
-    route: 'signin',
+    route: 'Dashboard',
     newForm: 'hidden',
     profile: 'hidden',
     edit: {
       project: '',
       state: false
     },    
-    projects : [],
+    projects : [{
+      name: 'fgfgf',
+      description: 'fgffggf',
+      contributor: ['r'],
+      tickets: []
+    }],
     team: [],
     loadedProject: {},
     loadedTicket: {},
@@ -205,6 +210,7 @@ class App extends Component {
 
     this.setState({user: info})
     this.setState({projects: allProjects})
+    this.loadTeamState()
     this.loadTeamState()
     this.setState({profile: 'hidden'})
   }  
@@ -708,6 +714,7 @@ class App extends Component {
         profileControl={this.profileControl}
         editUser={this.editUser} 
         editPassword={this.editPassword}
+        loadTeamState={this.loadTeamState}
         /> :
         <div className='waste'></div>
         }  
