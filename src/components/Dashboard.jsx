@@ -144,7 +144,9 @@ export default function Dashboard(props) {
                     <h2>CONTRIBUTORS</h2>
                 </div>
                 <ul>  
-                    {listItems}
+                    {props.project?
+                    listItems :
+                    <div></div>}
                 </ul>
             </div>
 
