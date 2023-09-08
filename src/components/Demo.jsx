@@ -1,10 +1,13 @@
 import React from 'react';
 
-export default function Demo() {
+export default function Demo(props) {
 
     function onDemoSubmit(version) {        
         if(version === 'admin') {
-           fetch('https://bug-tracker-backend-jpam.onrender.com/signin', {
+           fetch(
+            // 'http://localhost:3000/signin', 
+            'https://bug-tracker-backend-jpam.onrender.com/signin', 
+            {
                 method: 'post',
                 headers: {'Content-Type': 'application/Json'},
                 body: JSON.stringify({
@@ -16,15 +19,18 @@ export default function Demo() {
             .then(
                 user => {
                 if(user.id){
-                    this.props.loadUser(user)
-                    this.props.loadProjectState()
-                    this.props.loadTeamState()
-                    this.props.routeChange('Dashboard')
+                    props.loadUser(user)
+                    props.loadProjectState()
+                    props.loadTeamState()
+                    props.routeChange('Dashboard')
                 }
             }
             ) 
         } else {
-            fetch('https://bug-tracker-backend-jpam.onrender.com/signin', {
+            fetch( 
+                // 'http://localhost:3000/signin', 
+            'https://bug-tracker-backend-jpam.onrender.com/signin', 
+                {
                 method: 'post',
                 headers: {'Content-Type': 'application/Json'},
                 body: JSON.stringify({

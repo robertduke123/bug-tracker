@@ -42,7 +42,10 @@ class Profile extends Component {
         let newP = document.querySelector('#newP').value
         let confirm = document.querySelector('#confirm').value
 
-        fetch('https://bug-tracker-backend-jpam.onrender.com/signin', {
+        fetch(
+            // 'http://localhost:3000/signin', 
+            'https://bug-tracker-backend-jpam.onrender.com/signin', 
+            {
             method: 'post',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -86,9 +89,11 @@ class Profile extends Component {
                     </div>
                     <div className="profile-info">
                         {this.props.user.email === 'admin' || this.props.user.email === 'employee' ?
-                        <div></div> :
                         <div>
-                            <p className="profile-edit" onClick={() => this.setState({profileRoute: 'editDetails'})}>Edit Account Details</p>
+                            <p style={{margin: '5px 0',  color: 'rgb(61, 198, 225)'}}>Cannot Edit</p>
+                        </div> :
+                        <div>
+                            <p className="profile-edit" styleonClick={() => this.setState({profileRoute: 'editDetails'})}>Edit Account Details</p>
                             <p className="profile-edit" onClick={() => this.setState({profileRoute: 'editPassword'})}>Edit Account Password</p>   
                         </div>}
                     </div>

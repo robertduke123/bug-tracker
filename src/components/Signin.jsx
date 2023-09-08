@@ -27,7 +27,10 @@ class SignIn extends Component{
         if(!email.value) {email.style.border = '2px solid red'} else {email.style.border = '2px solid white'}  
         if(!password.value) {password.style.border = '2px solid red'} else {password.style.border = '2px solid white'}     
 
-        fetch('https://bug-tracker-backend-jpam.onrender.com/signin', {
+        fetch(
+            // 'http://localhost:3000/signin', 
+            'https://bug-tracker-backend-jpam.onrender.com/signin', 
+            {
             method: 'post',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({

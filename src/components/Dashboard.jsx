@@ -31,18 +31,20 @@ export default function Dashboard(props) {
         let none = false
         if(props.projects) {
             props.projects.forEach(project => {
-                if(project.tickets.length === 0) {
-                    none = true
-                } else {
-                    none = false
-                project.tickets.forEach(ticket => {
-                    if(ticket.author === props.user.firstName + ' ' + props.user.lastName){
-                        types.push(ticket.type)
-                        priorities.push(ticket.priority)
-                        status.push(ticket.status)  
-                    }                
-                })
-            }
+                if(project.tickets) {
+                  if(project.tickets.length === 0) {
+                        none = true
+                    } else {
+                        none = false
+                    project.tickets.forEach(ticket => {
+                        if(ticket.author === props.user.firstName + ' ' + props.user.lastName){
+                            types.push(ticket.type)
+                            priorities.push(ticket.priority)
+                            status.push(ticket.status)  
+                        }                
+                    })
+                }  
+                }                
             })
         }
        
@@ -114,7 +116,7 @@ export default function Dashboard(props) {
     
     let listItems = props.projects.map(project => {            
         let contributors = project.contributor.join(', ')   
-        if(project.contributors.includes(props.user.firstName + ' ' + props.user.lastName))  {
+        // if(project.contributor.includes(props.user.firstName + ' ' + props.user.lastName))  {
             return(
             <li key={`item ${(props.projects.indexOf(project) + 1)}`} className='project-item'>
                 <h2 className='project-name' onClick={(e) => props.loadProject(e)}>{project.name}</h2>
@@ -127,7 +129,7 @@ export default function Dashboard(props) {
                 </ul>
             </li>
             )
-        }                  
+        // }                  
     })
 
     return(

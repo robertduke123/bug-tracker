@@ -4,14 +4,17 @@ export default function Tickets(props) {
 
     let projectList = []
     let list = []
-    props.projects.forEach(project => {        
-        project.tickets.forEach(ticket => {
-            if(ticket.author === props.user.firstName + ' ' + props.user.lastName){
-                projectList.push(project)
-                list.push(ticket)
-            }
-        })   
-    })
+    if(props.projects) {
+        props.projects.forEach(project => {        
+            project.tickets.forEach(ticket => {
+                if(ticket.author === props.user.firstName + ' ' + props.user.lastName){
+                    projectList.push(project)
+                    list.push(ticket)
+                }
+            })   
+        })    
+    }
+    
        
     console.log(list, props.user);
 

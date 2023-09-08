@@ -57,7 +57,10 @@ class App extends Component {
   }
 
   loadProjectState = () => {
-    fetch('https://bug-tracker-backend-jpam.onrender.com/projects')
+    fetch(
+      // 'http://localhost:3000/projects', 
+            'https://bug-tracker-backend-jpam.onrender.com/projects', 
+    )
         .then(res => res.json())
         .then(
             data => {
@@ -69,7 +72,10 @@ class App extends Component {
   }
 
   loadTeamState = () => {
-    fetch('https://bug-tracker-backend-jpam.onrender.com/team')
+    fetch(
+      // 'http://localhost:3000/team', 
+            'https://bug-tracker-backend-jpam.onrender.com/team', 
+    )
         .then(res => res.json())
         .then(
             data => {
@@ -140,7 +146,10 @@ class App extends Component {
   }
 
   editUser = (info) => {
-    fetch('https://bug-tracker-backend-jpam.onrender.com/edit_team', {
+    fetch(
+      // 'http://localhost:3000/signin', 
+        'https://bug-tracker-backend-jpam.onrender.com/signin', 
+      {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -161,7 +170,10 @@ class App extends Component {
         let contributor = project.contributor
         contributor.splice(contributor.indexOf(this.state.user.firstName + ' ' + this.state.user.lastName), 1)
         contributor.push(info.firstName + ' ' + info.lastName)
-        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_project', {
+        fetch(
+          // 'http://localhost:3000/edit_project', 
+            'https://bug-tracker-backend-jpam.onrender.com/edit_project', 
+          {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -183,7 +195,10 @@ class App extends Component {
         assignedDevs.splice(assignedDevs.indexOf(this.state.user.firstName + ' ' + this.state.user.lastName), 1)
         assignedDevs.push(info.firstName + ' ' + info.lastName)
         
-        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_ticket', {
+        fetch(
+          // 'http://localhost:3000/edit_ticket', 
+            'https://bug-tracker-backend-jpam.onrender.com/edit_ticket', 
+          {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -213,7 +228,10 @@ class App extends Component {
 
   editPassword = (old, newP) => {
     
-    fetch('https://bug-tracker-backend-jpam.onrender.com/edit_password', {
+    fetch(
+      // 'http://localhost:3000/edit_password', 
+            'https://bug-tracker-backend-jpam.onrender.com/edit_password', 
+      {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -229,7 +247,10 @@ class App extends Component {
   }
 
   createProject = (projectDetails) => {
-    fetch('https://bug-tracker-backend-jpam.onrender.com/projects', {
+    fetch(
+      // 'http://localhost:3000/projects', 
+            'https://bug-tracker-backend-jpam.onrender.com/projects', 
+      {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -297,7 +318,10 @@ class App extends Component {
     })
     projectState.contributor = projectMembers
 
-    fetch('https://bug-tracker-backend-jpam.onrender.com/edit_project', {
+    fetch(
+      // 'http://localhost:3000/edit_project', 
+            'https://bug-tracker-backend-jpam.onrender.com/edit_project', 
+      {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -321,7 +345,10 @@ class App extends Component {
     let projectState = allProjects[projectIndex]
     let allTickets = projectState.tickets
 
-     fetch('https://bug-tracker-backend-jpam.onrender.com/tickets', {
+     fetch(
+      // 'http://localhost:3000/tickets', 
+            'https://bug-tracker-backend-jpam.onrender.com/tickets', 
+      {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -357,7 +384,10 @@ class App extends Component {
       project = e.target.parentNode.parentNode.firstChild.innerHTML
       let projectIndex = allProjects.findIndex(object => {return object.name === project}) 
 
-      fetch('https://bug-tracker-backend-jpam.onrender.com/delete_project', {
+      fetch(
+        // 'http://localhost:3000/delete_project', 
+            'https://bug-tracker-backend-jpam.onrender.com/delete_project', 
+        {
             method: 'delete',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -377,7 +407,10 @@ class App extends Component {
       let allTickets = allProjects[projectIndex].tickets  
       let ticketIndex = allTickets.findIndex(object => {return object.ticketTitle === ticket})
 
-      fetch('https://bug-tracker-backend-jpam.onrender.com/delete_ticket', {
+      fetch(
+        // 'http://localhost:3000/delete_ticket', 
+            'https://bug-tracker-backend-jpam.onrender.com/delete_ticket', 
+        {
             method: 'delete',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -400,7 +433,10 @@ class App extends Component {
       let memberIndex = allMembers.indexOf(member)
       allMembers.splice(memberIndex, 1)
 
-      fetch('https://bug-tracker-backend-jpam.onrender.com/edit_project', {
+      fetch(
+        // 'http://localhost:3000/edit_project', 
+            'https://bug-tracker-backend-jpam.onrender.com/edit_project', 
+        {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -419,7 +455,10 @@ class App extends Component {
       let allMembers = this.state.team
       let memberIndex = allMembers.findIndex(object => {return object.name === member.name})
 
-      fetch('https://bug-tracker-backend-jpam.onrender.com/delete_team', {
+      fetch(
+        // 'http://localhost:3000/delete_team', 
+            'https://bug-tracker-backend-jpam.onrender.com/delete_team', 
+        {
             method: 'delete',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -443,7 +482,10 @@ class App extends Component {
       if(version === 'project') {
         let projectIndex = allProjects.findIndex(object => {return object.name === this.state.edit.project.name})   
         project = allProjects[projectIndex]
-        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_project', {
+        fetch(
+          // 'http://localhost:3000/edit_project', 
+            'https://bug-tracker-backend-jpam.onrender.com/edit_project', 
+          {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -468,7 +510,10 @@ class App extends Component {
         let ticket = allTickets[ticketIndex]
 
 
-        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_ticket', {
+        fetch(
+          // 'http://localhost:3000/edit_ticket', 
+            'https://bug-tracker-backend-jpam.onrender.com/edit_ticket', 
+          {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -500,7 +545,10 @@ class App extends Component {
       let allMembers = this.state.team
       let memberIndex = allMembers.findIndex(object => {return object.firstName === member.firstName})
 
-      fetch('https://bug-tracker-backend-jpam.onrender.com/edit_team', {
+      fetch(
+        // 'http://localhost:3000/edit_team', 
+            'https://bug-tracker-backend-jpam.onrender.com/edit_team', 
+        {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -521,7 +569,10 @@ class App extends Component {
         let contributor = project.contributor
         contributor.splice(contributor.indexOf(this.state.loadedMember.firstName + ' ' + this.state.loadedMember.lastName), 1)
         contributor.push(state.firstName + ' ' + state.lastName)
-        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_project', {
+        fetch(
+          // 'http://localhost:3000/edit_project', 
+            'https://bug-tracker-backend-jpam.onrender.com/edit_project', 
+          {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -542,7 +593,10 @@ class App extends Component {
         assignedDevs.splice(assignedDevs.indexOf(this.state.loadedMember.firstName + ' ' + this.state.loadedMember.lastName), 1)
         assignedDevs.push(state.firstName + ' ' + state.lastName)
         
-        fetch('https://bug-tracker-backend-jpam.onrender.com/edit_ticket', {
+        fetch(
+          // 'http://localhost:3000/edit_ticket', 
+            'https://bug-tracker-backend-jpam.onrender.com/edit_ticket', 
+          {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -595,7 +649,10 @@ class App extends Component {
     let commentIndex = commentsState.findIndex(object => {return object.comment === deletion})
 
     action === 'add' ? 
-     fetch('https://bug-tracker-backend-jpam.onrender.com/comments', {
+     fetch(
+      // 'http://localhost:3000/comment', 
+            'https://bug-tracker-backend-jpam.onrender.com/comment', 
+      {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
@@ -607,7 +664,10 @@ class App extends Component {
         })
         .then(res => res.json())
         .catch(console.log()) :
-        fetch('https://bug-tracker-backend-jpam.onrender.com/delete_comment', {
+        fetch(
+          // 'http://localhost:3000/delete_comment', 
+            'https://bug-tracker-backend-jpam.onrender.com/delete_comment', 
+          {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
             body: JSON.stringify({
