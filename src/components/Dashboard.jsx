@@ -113,8 +113,8 @@ export default function Dashboard(props) {
 
     
     let listItems = props.projects.map(project => {            
-        let contributors = project.contributor.join(', ')
-        
+        let contributors = project.contributor.join(', ')   
+        if(project.contributors.includes(props.user.firstName + ' ' + props.user.lastName))  {
             return(
             <li key={`item ${(props.projects.indexOf(project) + 1)}`} className='project-item'>
                 <h2 className='project-name' onClick={(e) => props.loadProject(e)}>{project.name}</h2>
@@ -127,7 +127,7 @@ export default function Dashboard(props) {
                 </ul>
             </li>
             )
-                
+        }                  
     })
 
     return(

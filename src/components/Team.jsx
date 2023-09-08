@@ -122,15 +122,16 @@ class Team extends Component {
                         </div>
                         <ul>
                             {this.props.team.map(member => {
-                                return (
-                                    <li className='ticket-item no'>
-                                        <h2 onMouseDown={(e) => this.props.loadMember(e)} onMouseUp={(e) => this.changeColor(e)}>{member.firstName + ' ' + member.lastName}</h2>
-                                        <p>{member.email}</p>
-                                        <p>{member.phone}</p>
-                                    </li>
-                                )
-                            })}
-                        
+                                if(member.email !== 'admin' || member.email !== 'employee') {
+                                    return (
+                                        <li className='ticket-item no'>
+                                            <h2 onMouseDown={(e) => this.props.loadMember(e)} onMouseUp={(e) => this.changeColor(e)}>{member.firstName + ' ' + member.lastName}</h2>
+                                            <p>{member.email}</p>
+                                            <p>{member.phone}</p>
+                                        </li>
+                                    )   
+                                }                                
+                            })}                        
                         </ul>                
                     </div>         
                     <div className="detail-cover"></div>   

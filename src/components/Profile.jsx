@@ -85,8 +85,12 @@ class Profile extends Component {
                         <h2>Position:</h2><h2>{this.state.position}</h2> 
                     </div>
                     <div className="profile-info">
-                        <p className="profile-edit" onClick={() => this.setState({profileRoute: 'editDetails'})}>Edit Account Details</p>
-                        <p className="profile-edit" onClick={() => this.setState({profileRoute: 'editPassword'})}>Edit Account Password</p>
+                        {this.props.user.email === 'admin' || this.props.user.email === 'employee' ?
+                        <div></div> :
+                        <div>
+                            <p className="profile-edit" onClick={() => this.setState({profileRoute: 'editDetails'})}>Edit Account Details</p>
+                            <p className="profile-edit" onClick={() => this.setState({profileRoute: 'editPassword'})}>Edit Account Password</p>   
+                        </div>}
                     </div>
                 </div> :
                 this.state.profileRoute === 'editDetails' ?

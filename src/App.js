@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SignIn from './components/Signin';
 import Register from './components/Register';
+import Demo from './components/Demo';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import NewProject from './components/NewProject';
@@ -661,7 +662,6 @@ class App extends Component {
       <div className='app'>
         {this.state.route === 'signin' ?
         <SignIn
-        user={this.state.user}
         routeChange={this.routeChange} 
         loadUser={this.loadUser}
         loadProjectState={this.loadProjectState}
@@ -669,7 +669,13 @@ class App extends Component {
         /> :
         this.state.route === 'register' ?
         <Register
-        user={this.state.user}
+        routeChange={this.routeChange}
+        loadUser={this.loadUser}
+        loadProjectState={this.loadProjectState}
+        loadTeamState={this.loadTeamState}
+        /> :
+        this.state.route === 'demo' ?
+        <Demo
         routeChange={this.routeChange}
         loadUser={this.loadUser}
         loadProjectState={this.loadProjectState}
