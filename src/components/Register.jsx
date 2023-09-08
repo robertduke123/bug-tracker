@@ -40,7 +40,20 @@ class Register extends Component{
     }
 
     onSubmitRegister = (e) => {
-        console.log(this.state);
+        let firstName = document.querySelector('#firstName')
+        let lastName = document.querySelector('#lastName')
+        let email = document.querySelector('#email-address')
+        let phone = document.querySelector('#phone')
+        let password = document.querySelector('#password')
+        let confirm = document.querySelector('#confirm-password')
+
+        if(!firstName.value) {firstName.style.border = '2px solid red'} else {firstName.style.border = '2px solid white'}  
+        if(!lastName.value) {lastName.style.border = '2px solid red'} else {lastName.style.border = '2px solid white'}  
+        if(!email.value) {email.style.border = '2px solid red'} else {email.style.border = '2px solid white'}  
+        if(!phone.value) {phone.style.border = '2px solid red'} else {phone.style.border = '2px solid white'}  
+        if(!password.value) {password.style.border = '2px solid red'} else {password.style.border = '2px solid white'} 
+        if(!confirm.value) {confirm.style.border = '2px solid red'} else {confirm.style.border = '2px solid white'}  
+
         if(this.state.password === this.state.confirmPassword){
         const {firstName, lastName, phone, email, password} = this.state
         fetch('https://bug-tracker-backend-jpam.onrender.com/register', {

@@ -21,6 +21,12 @@ class SignIn extends Component{
     }
 
     onSubmitSignIn = (e) => {
+        let email = document.querySelector('#email-address')
+        let password = document.querySelector('#password')
+
+        if(!email.value) {email.style.border = '2px solid red'} else {email.style.border = '2px solid white'}  
+        if(!password.value) {password.style.border = '2px solid red'} else {password.style.border = '2px solid white'}     
+
         fetch('https://bug-tracker-backend-jpam.onrender.com/signin', {
             method: 'post',
             headers: {'Content-Type': 'application/Json'},
@@ -74,12 +80,14 @@ class SignIn extends Component{
                     
                     
                     <p 
-                        // href="#0" 
-                        // id='reg'
-                        // className='btn'
                         style={{cursor: 'pointer', color: 'white'}}
                         onClick={() => this.props.routeChange('register')}
-                        >Register</p>
+                    >Register</p>
+
+                    <p 
+                        style={{cursor: 'pointer', color: 'white'}}
+                        onClick={() => this.props.routeChange('demo')}
+                    >Demo</p>
                     
                 </form>
             </div>
