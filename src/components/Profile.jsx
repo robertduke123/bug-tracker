@@ -82,7 +82,7 @@ class Profile extends Component {
                         <h2>Email:</h2><h2>{this.state.email}</h2> 
                     </div>
                     <div className="profile-info">
-                        <h2>Position:</h2><h2>{this.state.position}</h2> 
+                        <h2>Position:</h2><h2>{this.state.position}</h2>  
                     </div>
                     <div className="profile-info">
                         {this.props.user.email === 'admin' || this.props.user.email === 'employee' ?
