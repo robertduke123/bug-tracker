@@ -651,7 +651,7 @@ class App extends Component {
     action === 'add' ? 
      fetch(
       // 'http://localhost:3000/comment', 
-            'https://bug-tracker-backend-jpam.onrender.com/comment', 
+            'https://bug-tracker-backend-jpam.onrender.com/comments', 
       {
             method: 'put',
             headers: {'Content-Type': 'application/Json'},
@@ -663,7 +663,7 @@ class App extends Component {
             })
         })
         .then(console.log)
-        .catch(console.log()) :
+        .catch(console.log) : 
         fetch(
           // 'http://localhost:3000/delete_comment', 
             'https://bug-tracker-backend-jpam.onrender.com/delete_comment', 
