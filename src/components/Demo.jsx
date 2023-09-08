@@ -42,10 +42,10 @@ export default function Demo(props) {
             .then(
                 user => {
                 if(user.id){
-                    this.props.loadUser(user)
-                    this.props.loadProjectState()
-                    this.props.loadTeamState()
-                    this.props.routeChange('Dashboard')
+                    props.loadUser(user)
+                    props.loadProjectState()
+                    props.loadTeamState()
+                    props.routeChange('Dashboard')
                 }
             }
             ) 
