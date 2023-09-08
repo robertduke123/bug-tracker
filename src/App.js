@@ -662,7 +662,7 @@ class App extends Component {
                 comment: comment
             })
         })
-        .then(res => res.json())
+        .then(console.log)
         .catch(console.log()) :
         fetch(
           // 'http://localhost:3000/delete_comment', 
