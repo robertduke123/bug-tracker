@@ -46,7 +46,6 @@ export default function Dashboard(props) {
             })
             count === 0 && (none = true)
         }
-        console.log(types, priorities,status, none);
        
         if(none) {
            document.querySelectorAll('.pie').forEach(pie => {
@@ -138,7 +137,7 @@ export default function Dashboard(props) {
         <div className='dashboard'>
             <div className='projects-container'>
                 <div className='project-head'>
-                    <h3 onClick={() => console.log(props.user)}>Projects</h3>
+                    <h3>Projects</h3>
                     <div className='btn' onClick={(e) => props.newFormControl(e,'project')}>New Project</div>
                 </div>
                 <div className='project-list-name'>

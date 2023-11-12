@@ -36,7 +36,6 @@ class NewMember extends Component{
                 }))
             }            
         })
-        // console.log(this.state.teamMembers);
     }
 
     componentDidMount() {

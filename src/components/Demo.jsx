@@ -51,7 +51,6 @@ export default function Demo(props) {
             ) 
         }
 
-        console.log('test')
         
     }
 

@@ -16,7 +16,6 @@ export default function Tickets(props) {
     }
     
        
-    console.log(list, props.user);
 
     let count = -1
 

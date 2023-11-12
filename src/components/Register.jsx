@@ -36,7 +36,6 @@ class Register extends Component{
 
     onConfirmPasswordChange = (e) => {
         this.setState({confirmPassword : e.target.value})
-        console.log(this.state);
     }
 
     onSubmitRegister = (e) => {
@@ -78,7 +77,6 @@ class Register extends Component{
                 this.props.loadProjectState()
                 this.props.loadTeamState()
                 this.props.routeChange('Dashboard')
-                console.log(user);
             }
         }
         )

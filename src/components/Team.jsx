@@ -49,12 +49,10 @@ class Team extends Component {
 
         positionChange = (e)  => {
             this.setState({position: e.target.value})
-            console.log(e.target.value);
         }
 
         emailChannge = (e) => {
             this.setState({email: e.target.value})
-            console.log(this.state);
         }
 
         submitMember = () => {

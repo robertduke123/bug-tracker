@@ -46,7 +46,6 @@ class SignIn extends Component{
                 this.props.loadProjectState()
                 this.props.loadTeamState()
                 this.props.routeChange('Dashboard')
-                console.log(user.name);
             }
         }
         )

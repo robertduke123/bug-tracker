@@ -67,7 +67,6 @@ class NewProject extends Component{
                     ]
                 }))}
             }     
-            console.log(this.state.contributor);
         })
     }
 
@@ -112,7 +111,7 @@ class NewProject extends Component{
                     <h2 style={{fontWeight: 'bold'}}>Add New Project</h2>
                     <div className='close' onClick={(e) => this.props.newFormControl(e, 'hidden', false)}>x</div>
                 </div>
-                <label htmlFor="project-name" onClick={() => (console.log(this.state.edit))}>Project Name</label>
+                <label htmlFor="project-name">Project Name</label>
                 <input name='project-name' type="text" id='project-name' onChange={this.projectName} 
                 defaultValue={ this.props.edit.state ? this.props.edit.project.name : ''}/>
 

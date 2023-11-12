@@ -21,7 +21,6 @@ class Profile extends Component {
         value === 'phone' ?
         this.setState({phone: e.target.value}):
         this.setState({email: e.target.value})
-        console.log(this.state);
     }
 
     profileSubmit = () => {
