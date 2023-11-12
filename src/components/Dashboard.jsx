@@ -29,31 +29,33 @@ export default function Dashboard(props) {
         let priorities = []
         let status = []
         let none = false
+        let count = 0
         if(props.projects) {
             props.projects.forEach(project => {
-                if(project.tickets) {
-                  if(project.tickets.length === 0) {
-                        none = true
-                    } else {
-                        none = false
+                if(project?.tickets) {   
                     project.tickets.forEach(ticket => {
                         if(ticket.author === props.user.firstName + ' ' + props.user.lastName){
                             types.push(ticket.type)
                             priorities.push(ticket.priority)
                             status.push(ticket.status)  
+                            count++
                         }                
                     })
-                }  
+                  
                 }                
             })
+            count === 0 && (none = true)
         }
+        console.log(types, priorities,status, none);
        
         if(none) {
            document.querySelectorAll('.pie').forEach(pie => {
             pie.innerHTML = 'no data'
-           })
-              
+           })              
         } else {
+            document.querySelectorAll('.pie').forEach(pie => {
+            pie.innerHTML = ''
+           })  
         if(type === 'type') {
             let issueNum = 0
             let bugNum = 0
