@@ -811,7 +811,9 @@ class App extends Component {
 			type: ticketState.type,
 			time: ticketState.time,
 			assignedDevs: ticketState.assignedDevs,
-			comments: commentsState,
+			comments_users: commentsUsers,
+			comments_dates: commentsDates,
+			comments_texts: commentsTexts,
 		};
 
 		allTickets[ticketIndex] = newTicketState;
