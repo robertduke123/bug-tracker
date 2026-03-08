@@ -118,8 +118,9 @@ class Team extends Component {
 					</div>
 					<ul>
 						{this.props.team.map((member) => {
-							if (member.email !== "admin" && member.email !== "employee") {
-								return (
+							return (
+								member.email !== "admin" &&
+								member.email !== "employee" && (
 									<li className="ticket-item no">
 										<h2
 											onMouseDown={(e) => this.props.loadMember(e)}
@@ -129,8 +130,8 @@ class Team extends Component {
 										<p>{member.email}</p>
 										<p>{member.phone}</p>
 									</li>
-								);
-							}
+								)
+							);
 						})}
 					</ul>
 				</div>

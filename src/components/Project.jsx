@@ -72,11 +72,9 @@ export default function Project(props) {
 									<ul>
 										{project.contributors.map((contributor) => {
 											return props.team.map((member) => {
-												if (
+												return (
 													member.firstName + " " + member.lastName ===
-													contributor
-												) {
-													return (
+														contributor && (
 														<li
 															key={`item ${props.projects.indexOf(project) + 1}`}
 															className="project-item">
@@ -99,8 +97,8 @@ export default function Project(props) {
 																</li>
 															</ul>
 														</li>
-													);
-												}
+													)
+												);
 											});
 										})}
 									</ul>

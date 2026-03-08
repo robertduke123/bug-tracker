@@ -356,9 +356,10 @@ class App extends Component {
 		let projectName = e.target.innerHTML;
 
 		this.state.projects.map((project) => {
-			if (project.name === projectName) {
-				this.setState({ loadedProject: project });
-			}
+			return (
+				project.name === projectName &&
+				this.setState({ loadedProject: project })
+			);
 		});
 		this.setState({ loadedTicket: {} });
 	};
@@ -367,9 +368,10 @@ class App extends Component {
 		let ticketName = e.target.innerHTML;
 
 		this.state.loadedProject.tickets.map((ticket) => {
-			if (ticket.ticket_title === ticketName) {
-				this.setState({ loadedTicket: ticket });
-			}
+			return (
+				ticket.ticket_title === ticketName &&
+				this.setState({ loadedTicket: ticket })
+			);
 		});
 	};
 
@@ -377,9 +379,10 @@ class App extends Component {
 		let memberName = e.target.innerHTML;
 
 		this.state.team.map((member) => {
-			if (member.firstName + " " + member.lastName === memberName) {
-				this.setState({ loadedMember: member });
-			}
+			return (
+				member.firstName + " " + member.lastName === memberName &&
+				this.setState({ loadedMember: member })
+			);
 		});
 	};
 
