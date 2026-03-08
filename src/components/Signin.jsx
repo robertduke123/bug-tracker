@@ -37,7 +37,7 @@ class SignIn extends Component {
 			"https://bug-tracker-backend-jpam.onrender.com/signin",
 			{
 				method: "post",
-				headers: { "Content-Type": "application/Json" },
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					email: this.state.signInEmail,
 					password: this.state.signInPassword,

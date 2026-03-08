@@ -45,6 +45,46 @@ class App extends Component {
 		this.state = initialState;
 	}
 
+	componentDidMount() {
+		const refresh = localStorage.getItem("refreshToken");
+
+		if (refresh) {
+			fetch(
+				"https://bug-tracker-backend-jpam.onrender.com/token",
+				// "http://localhost:4000/token",
+				{
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						token: refresh,
+					}),
+				},
+			)
+				.then((response) => {
+					// if (response.status !== 403) {
+					return response.json();
+					// } else {
+					// 	localStorage.removeItem("refreshToken");
+					// }
+				})
+				.then((data) => {
+					if (data.id) {
+						this.loadUser(data);
+						this.loadProjectState();
+						this.loadTeamState();
+						this.routeChange("Dashboard");
+					}
+				});
+		}
+	}
+
+	componentDidUpdate(prevProps, prevState) {
+		// Compare previous state with current state
+		if (prevState !== this.state) {
+			console.log(this.state);
+		}
+	}
+
 	loadUser = (data) => {
 		this.setState({
 			user: {
@@ -68,6 +108,7 @@ class App extends Component {
 				if (data.length > 0) {
 					this.setState({ projects: data });
 				}
+				console.log(this.state);
 			});
 	};
 
@@ -128,7 +169,7 @@ class App extends Component {
 				let ticketIndex = this.state.projects[projectIndex].tickets.findIndex(
 					(object) => {
 						return (
-							object.ticketTitle ===
+							object.ticket_title ===
 							e.target.parentNode.parentNode.firstChild.innerHTML
 						);
 					},
@@ -148,7 +189,7 @@ class App extends Component {
 								this.state.projects.findIndex((object) => {
 									return object.name === project;
 								})
-							].contributor,
+							].contributors,
 						state: true,
 					},
 				});
@@ -173,7 +214,7 @@ class App extends Component {
 			"https://bug-tracker-backend-jpam.onrender.com/signin",
 			{
 				method: "put",
-				headers: { "Content-Type": "application/Json" },
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					oldEmail: this.state.user.email,
 					newFirst: info.firstName,
@@ -185,39 +226,39 @@ class App extends Component {
 			},
 		)
 			.then((res) => res.json())
-			.catch(console.log());
+			.catch(console.log);
 
 		let allProjects = this.state.projects;
 		allProjects.forEach((project) => {
 			if (
-				project.contributor.includes(
+				project.contributors.includes(
 					this.state.user.firstName + " " + this.state.user.lastName,
 				)
 			) {
-				let contributor = project.contributor;
-				contributor.splice(
-					contributor.indexOf(
+				let contributors = project.contributors;
+				contributors.splice(
+					contributors.indexOf(
 						this.state.user.firstName + " " + this.state.user.lastName,
 					),
 					1,
 				);
-				contributor.push(info.firstName + " " + info.lastName);
+				contributors.push(info.firstName + " " + info.lastName);
 				fetch(
 					// 'http://localhost:3000/edit_project',
 					"https://bug-tracker-backend-jpam.onrender.com/edit_project",
 					{
 						method: "put",
-						headers: { "Content-Type": "application/Json" },
+						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
 							project: project.name,
 							newName: project.name,
 							newDescription: project.description,
-							newContributor: contributor,
+							newContributors: contributors,
 						}),
 					},
 				)
 					.then((res) => res.json())
-					.catch(console.log());
+					.catch(console.log);
 			}
 			project.tickets.forEach((ticket) => {
 				if (
@@ -226,7 +267,7 @@ class App extends Component {
 				) {
 					ticket.author = info.firstName + " " + info.lastName;
 
-					let assignedDevs = ticket.assignedDevs;
+					let assignedDevs = ticket.assigned_devs;
 					assignedDevs.splice(
 						assignedDevs.indexOf(
 							this.state.user.firstName + " " + this.state.user.lastName,
@@ -240,22 +281,22 @@ class App extends Component {
 						"https://bug-tracker-backend-jpam.onrender.com/edit_ticket",
 						{
 							method: "put",
-							headers: { "Content-Type": "application/Json" },
+							headers: { "Content-Type": "application/json" },
 							body: JSON.stringify({
-								ticket: ticket.ticketTitle,
-								newTicketTitle: ticket.ticketTitle,
+								ticket: ticket.ticket_title,
+								newTicketTitle: ticket.ticket_title,
 								newAuthor: info.firstName + " " + info.lastName,
 								newDescription: ticket.description,
 								newStatus: ticket.status,
 								newPriority: ticket.priority,
 								newType: ticket.type,
 								newTime: ticket.time,
-								newAssignedDevs: ticket.assignedDevs,
+								newAssignedDevs: ticket.assigned_devs,
 							}),
 						},
 					)
 						.then((res) => res.json())
-						.catch(console.log());
+						.catch(console.log);
 				}
 			});
 		});
@@ -273,7 +314,7 @@ class App extends Component {
 			"https://bug-tracker-backend-jpam.onrender.com/edit_password",
 			{
 				method: "put",
-				headers: { "Content-Type": "application/Json" },
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					email: this.state.user.email,
 					prevPassword: old,
@@ -282,7 +323,7 @@ class App extends Component {
 			},
 		)
 			.then((res) => res.json())
-			.catch(console.log());
+			.catch(console.log);
 
 		this.setState({ profile: "hidden" });
 	};
@@ -293,16 +334,16 @@ class App extends Component {
 			"https://bug-tracker-backend-jpam.onrender.com/projects",
 			{
 				method: "put",
-				headers: { "Content-Type": "application/Json" },
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					name: projectDetails.name,
 					description: projectDetails.description,
-					contributor: projectDetails.contributor,
+					contributors: projectDetails.contributors,
 				}),
 			},
 		)
 			.then((res) => res.json())
-			.catch(console.log());
+			.catch(console.log);
 
 		this.setState((prevState) => ({
 			projects: [...prevState.projects, projectDetails],
@@ -326,7 +367,7 @@ class App extends Component {
 		let ticketName = e.target.innerHTML;
 
 		this.state.loadedProject.tickets.map((ticket) => {
-			if (ticket.ticketTitle === ticketName) {
+			if (ticket.ticket_title === ticketName) {
 				this.setState({ loadedTicket: ticket });
 			}
 		});
@@ -353,30 +394,30 @@ class App extends Component {
 		});
 		let allProjects = this.state.projects;
 		let projectState = allProjects[projectIndex];
-		let projectMembers = projectState.contributor;
+		let projectMembers = projectState.contributors;
 		teamMembers.forEach((member) => {
 			if (!projectMembers.includes(member)) {
 				projectMembers.push(member);
 			}
 		});
-		projectState.contributor = projectMembers;
+		projectState.contributors = projectMembers;
 
 		fetch(
 			// 'http://localhost:3000/edit_project',
 			"https://bug-tracker-backend-jpam.onrender.com/edit_project",
 			{
 				method: "put",
-				headers: { "Content-Type": "application/Json" },
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					project: project,
 					newName: projectState.name,
 					newDescription: projectState.description,
-					newContributor: projectState.contributor,
+					newContributors: projectState.contributors,
 				}),
 			},
 		)
 			.then((res) => res.json())
-			.catch(console.log());
+			.catch(console.log);
 
 		allProjects[projectIndex] = projectState;
 		this.setState({ projects: allProjects });
@@ -400,22 +441,22 @@ class App extends Component {
 			"https://bug-tracker-backend-jpam.onrender.com/tickets",
 			{
 				method: "put",
-				headers: { "Content-Type": "application/Json" },
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					projectName: project,
-					ticketTitle: newTicket.ticketTitle,
+					ticketTitle: newTicket.ticket_title,
 					author: newTicket.author,
 					description: newTicket.description,
 					status: newTicket.status,
 					priority: newTicket.priority,
 					type: newTicket.type,
 					time: newTicket.time,
-					assignedDevs: newTicket.assignedDevs,
+					assignedDevs: newTicket.assigned_devs,
 				}),
 			},
 		)
 			.then((res) => res.json())
-			.catch(console.log());
+			.catch(console.log);
 
 		allTickets.push(newTicket);
 		projectState.tickets = allTickets;
@@ -442,14 +483,14 @@ class App extends Component {
 				"https://bug-tracker-backend-jpam.onrender.com/delete_project",
 				{
 					method: "delete",
-					headers: { "Content-Type": "application/Json" },
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						projectName: project,
 					}),
 				},
 			)
 				.then((res) => res.json())
-				.catch(console.log());
+				.catch(console.log);
 
 			allProjects.splice(projectIndex, 1);
 			this.setState({ projects: allProjects });
@@ -461,7 +502,7 @@ class App extends Component {
 			});
 			let allTickets = allProjects[projectIndex].tickets;
 			let ticketIndex = allTickets.findIndex((object) => {
-				return object.ticketTitle === ticket;
+				return object.ticket_title === ticket;
 			});
 
 			fetch(
@@ -469,14 +510,14 @@ class App extends Component {
 				"https://bug-tracker-backend-jpam.onrender.com/delete_ticket",
 				{
 					method: "delete",
-					headers: { "Content-Type": "application/Json" },
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						ticketName: ticket,
 					}),
 				},
 			)
 				.then((res) => res.json())
-				.catch(console.log());
+				.catch(console.log);
 
 			allTickets.splice(ticketIndex, 1);
 			this.setState({ projects: allProjects });
@@ -488,7 +529,7 @@ class App extends Component {
 			let projectIndex = allProjects.findIndex((object) => {
 				return object.name === project;
 			});
-			let allMembers = allProjects[projectIndex].contributor;
+			let allMembers = allProjects[projectIndex].contributors;
 			let memberIndex = allMembers.indexOf(member);
 			allMembers.splice(memberIndex, 1);
 
@@ -497,17 +538,17 @@ class App extends Component {
 				"https://bug-tracker-backend-jpam.onrender.com/edit_project",
 				{
 					method: "put",
-					headers: { "Content-Type": "application/Json" },
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						project: project,
 						newName: allProjects[projectIndex].name,
 						newDescription: allProjects[projectIndex].description,
-						newContributor: allMembers,
+						newContributors: allMembers,
 					}),
 				},
 			)
 				.then((res) => res.json())
-				.catch(console.log());
+				.catch(console.log);
 
 			this.setState({ projects: allProjects });
 		} else {
@@ -522,19 +563,31 @@ class App extends Component {
 				"https://bug-tracker-backend-jpam.onrender.com/delete_team",
 				{
 					method: "delete",
-					headers: { "Content-Type": "application/Json" },
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						id: member.id,
 					}),
 				},
 			)
 				.then((res) => res.json())
-				.catch(console.log());
-
-			allMembers.splice(memberIndex, 1);
-
-			this.setState({ team: allMembers });
-			this.setState({ loadedMember: {} });
+				.then((data) => {
+					if (data.length > 0) {
+						let state = [];
+						data.forEach((member) => {
+							state.push({
+								id: member.id,
+								firstName: member.first_name,
+								lastName: member.last_name,
+								phone: member.phone,
+								email: member.email,
+								position: member.position,
+							});
+						});
+						this.setState({ team: state });
+					}
+					this.setState({ loadedMember: {} });
+				})
+				.catch(console.log);
 		}
 	};
 
@@ -552,21 +605,21 @@ class App extends Component {
 				"https://bug-tracker-backend-jpam.onrender.com/edit_project",
 				{
 					method: "put",
-					headers: { "Content-Type": "application/Json" },
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						project: project.name,
 						newName: state.name,
 						newDescription: state.description,
-						newContributor: state.contributor,
+						newContributors: state.contributors,
 					}),
 				},
 			)
 				.then((res) => res.json())
-				.catch(console.log());
+				.catch(console.log);
 
 			project.name = state.name;
 			project.description = state.description;
-			project.contributor = state.contributor;
+			project.contributors = state.contributors;
 			this.setState({ projects: allProjects });
 		} else if (version === "ticket") {
 			project = document.querySelector(".project-title h1").innerHTML;
@@ -575,40 +628,43 @@ class App extends Component {
 			});
 			let allTickets = this.state.projects[projectIndex].tickets;
 			let ticketIndex = allTickets.findIndex((object) => {
-				return object.ticketTitle === state.ticketTitle;
+				console.log(object.id, state.id);
+
+				return object.id === state.id;
 			});
 			let ticket = allTickets[ticketIndex];
+			console.log(project, projectIndex, ticketIndex, ticket);
 
 			fetch(
 				// 'http://localhost:3000/edit_ticket',
 				"https://bug-tracker-backend-jpam.onrender.com/edit_ticket",
 				{
 					method: "put",
-					headers: { "Content-Type": "application/Json" },
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
-						ticket: ticket.ticketTitle,
-						newTicketTitle: state.ticketTitle,
+						ticket: ticket.ticket_title,
+						newTicketTitle: state.ticket_title,
 						newAuthor: state.author,
 						newDescription: state.description,
 						newStatus: state.status,
 						newPriority: state.priority,
 						newType: state.type,
 						newTime: state.time,
-						newAssignedDevs: state.assignedDevs,
+						newAssignedDevs: state.assigned_devs,
 					}),
 				},
 			)
 				.then((res) => res.json())
-				.catch(console.log());
+				.catch(console.log);
 
-			ticket.ticketTitle = state.ticketTitle;
+			ticket.ticket_title = state.ticket_title;
 			ticket.author = state.author;
 			ticket.description = state.description;
 			ticket.status = state.status;
 			ticket.priority = state.priority;
 			ticket.type = state.type;
 			ticket.time = state.time;
-			ticket.assignedDevs = state.assignedDevs;
+			ticket.assigned_devs = state.assigned_devs;
 			this.setState({ projects: allProjects });
 		} else {
 			let member = this.state.loadedMember;
@@ -616,61 +672,62 @@ class App extends Component {
 			let memberIndex = allMembers.findIndex((object) => {
 				return object.firstName === member.firstName;
 			});
+			console.log(allMembers[memberIndex]);
 
 			fetch(
 				// 'http://localhost:3000/edit_team',
 				"https://bug-tracker-backend-jpam.onrender.com/edit_team",
 				{
 					method: "put",
-					headers: { "Content-Type": "application/Json" },
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						oldEmail: allMembers[memberIndex].email,
-						newFirst: state.firstName,
-						newLast: state.lastName,
-						newPhone: state.phone,
-						newEmail: state.email,
-						newPosition: state.position,
+						newFirst: member.firstName,
+						newLast: member.lastName,
+						newPhone: member.phone,
+						newEmail: member.email,
+						newPosition: member.position,
 					}),
 				},
 			)
 				.then((res) => res.json())
-				.catch(console.log());
+				.catch(console.log);
 
 			let allProjects = this.state.projects;
 			allProjects.forEach((project) => {
 				if (
-					project.contributor.includes(
+					project.contributors.includes(
 						this.state.loadedMember.firstName +
 							" " +
 							this.state.loadedMember.lastName,
 					)
 				) {
-					let contributor = project.contributor;
-					contributor.splice(
-						contributor.indexOf(
+					let contributors = project.contributors;
+					contributors.splice(
+						contributors.indexOf(
 							this.state.loadedMember.firstName +
 								" " +
 								this.state.loadedMember.lastName,
 						),
 						1,
 					);
-					contributor.push(state.firstName + " " + state.lastName);
+					contributors.push(state.firstName + " " + state.lastName);
 					fetch(
 						// 'http://localhost:3000/edit_project',
 						"https://bug-tracker-backend-jpam.onrender.com/edit_project",
 						{
 							method: "put",
-							headers: { "Content-Type": "application/Json" },
+							headers: { "Content-Type": "application/json" },
 							body: JSON.stringify({
 								project: project.name,
 								newName: project.name,
 								newDescription: project.description,
-								newContributor: contributor,
+								newContributors: contributors,
 							}),
 						},
 					)
 						.then((res) => res.json())
-						.catch(console.log());
+						.catch(console.log);
 				}
 				project.tickets.forEach((ticket) => {
 					if (
@@ -680,7 +737,7 @@ class App extends Component {
 							this.state.loadedMember.lastName
 					) {
 						ticket.author = state.firstName + " " + state.lastName;
-						let assignedDevs = ticket.assignedDevs;
+						let assignedDevs = ticket.assigned_devs;
 						assignedDevs.splice(
 							assignedDevs.indexOf(
 								this.state.loadedMember.firstName +
@@ -696,31 +753,31 @@ class App extends Component {
 							"https://bug-tracker-backend-jpam.onrender.com/edit_ticket",
 							{
 								method: "put",
-								headers: { "Content-Type": "application/Json" },
+								headers: { "Content-Type": "application/json" },
 								body: JSON.stringify({
-									ticket: ticket.ticketTitle,
-									newTicketTitle: ticket.ticketTitle,
+									ticket: ticket.ticket_title,
+									newTicketTitle: ticket.ticket_title,
 									newAuthor: state.firstName + " " + state.lastName,
 									newDescription: ticket.description,
 									newStatus: ticket.status,
 									newPriority: ticket.priority,
 									newType: ticket.type,
 									newTime: ticket.time,
-									newAssignedDevs: ticket.assignedDevs,
+									newAssignedDevs: ticket.assigned_devs,
 								}),
 							},
 						)
 							.then((res) => res.json())
-							.catch(console.log());
+							.catch(console.log);
 					}
 				});
 			});
 
 			allMembers[memberIndex] = state;
 			this.setState({ team: allMembers });
-			if (this.state.loadedMember.firstName === this.state.user.firstName) {
-				this.setState({ user: state });
-			}
+			// if (this.state.loadedMember.firstName === this.state.user.firstName) {
+			this.setState({ user: member });
+			// }
 
 			this.setState({ projects: allProjects });
 			this.setState({ loadedMember: {} });
@@ -735,23 +792,25 @@ class App extends Component {
 		});
 		let ticketIndex = this.state.projects[projectIndex].tickets.findIndex(
 			(object) => {
-				return object.ticketTitle === ticket;
+				return object.ticket_title === ticket;
 			},
 		);
 		let comment;
 		let deletion;
 
-		action === "add"
-			? (comment = e.target.previousSibling.value)
-			: (deletion = e.target.nextSibling.innerHTML);
+		if (action === "add") {
+			comment = e.target.previousSibling.value;
+		} else {
+			deletion = e.target.nextSibling.innerHTML;
+		}
 
 		let allProjects = this.state.projects;
 		let projectState = allProjects[projectIndex];
 		let allTickets = projectState.tickets;
 		let ticketState = projectState.tickets[ticketIndex];
-		let commentsUsers = ticketState.comment_user;
-		let commentsDates = ticketState.comment_date;
-		let commentsTexts = ticketState.comment_text;
+		let commentsUsers = ticketState.comment_user || [];
+		let commentsDates = ticketState.comment_date || [];
+		let commentsTexts = ticketState.comment_text || [];
 
 		let commentIndex = commentsTexts.findIndex((object) => {
 			return object === deletion;
@@ -763,7 +822,7 @@ class App extends Component {
 					"https://bug-tracker-backend-jpam.onrender.com/comments",
 					{
 						method: "put",
-						headers: { "Content-Type": "application/Json" },
+						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
 							ticketTitle: ticket,
 							user: this.state.user.firstName + " " + this.state.user.lastName,
@@ -779,7 +838,7 @@ class App extends Component {
 					"https://bug-tracker-backend-jpam.onrender.com/delete_comment",
 					{
 						method: "put",
-						headers: { "Content-Type": "application/Json" },
+						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
 							ticketTitle: ticket,
 							user: commentsUsers[commentIndex],
@@ -789,7 +848,7 @@ class App extends Component {
 					},
 				)
 					.then((res) => res.json())
-					.catch(console.log());
+					.catch(console.log);
 
 		if (action === "add") {
 			commentsUsers.push(
@@ -802,26 +861,29 @@ class App extends Component {
 			commentsDates.splice(commentIndex, 1);
 			commentsTexts.splice(commentIndex, 1);
 		}
+
 		let newTicketState = {
-			ticketTitle: ticketState.ticketTitle,
+			id: ticketState.id,
+			ticket_title: ticketState.ticket_title,
 			author: ticketState.author,
 			description: ticketState.description,
 			status: ticketState.status,
 			priority: ticketState.priority,
 			type: ticketState.type,
 			time: ticketState.time,
-			assignedDevs: ticketState.assignedDevs,
-			comments_users: commentsUsers,
-			comments_dates: commentsDates,
-			comments_texts: commentsTexts,
+			assignedDevs: ticketState.assigned_devs,
+			comment_user: commentsUsers,
+			comment_date: commentsDates,
+			comment_text: commentsTexts,
 		};
 
 		allTickets[ticketIndex] = newTicketState;
 
 		let newProjectState = {
+			id: projectState.id,
 			name: projectState.name,
 			description: projectState.description,
-			contributor: projectState.contributor,
+			contributors: projectState.contributors,
 			tickets: allTickets,
 		};
 

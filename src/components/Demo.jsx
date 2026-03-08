@@ -8,7 +8,7 @@ export default function Demo(props) {
 				"https://bug-tracker-backend-jpam.onrender.com/signin",
 				{
 					method: "post",
-					headers: { "Content-Type": "application/Json" },
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						email: "admin",
 						password: "N/A",
@@ -31,7 +31,7 @@ export default function Demo(props) {
 				"https://bug-tracker-backend-jpam.onrender.com/signin",
 				{
 					method: "post",
-					headers: { "Content-Type": "application/Json" },
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						email: "employee",
 						password: "N/A",

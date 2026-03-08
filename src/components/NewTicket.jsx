@@ -23,50 +23,47 @@ class NewTicket extends Component {
 		super(props);
 		if (this.props.edit.state) {
 			this.state = {
-				ticketTitle: this.props.edit.project.ticketTitle,
+				id: this.props.edit.project.id,
+				ticket_title: this.props.edit.project.ticket_title,
 				author: this.props.edit.project.author,
 				description: this.props.edit.project.description,
 				status: this.props.edit.project.status,
 				priority: this.props.edit.project.priority,
 				type: this.props.edit.project.type,
 				time: this.props.edit.project.time,
-				assignedDevs: this.props.edit.project.assignedDevs,
+				assigned_devs: this.props.edit.project.assigned_devs,
 				comments: this.props.edit.project.comments,
 			};
 		} else {
 			this.state = {
-				ticketTitle: "",
+				ticket_title: "",
 				author: this.props.user.firstName + " " + this.props.user.lastName,
 				description: "",
 				status: "resolved",
 				priority: "immediate",
 				type: "issue",
 				time: "",
-				assignedDevs: [],
+				assigned_devs: [],
 				comments: [],
 			};
 		}
 	}
 
 	ticketName = (e) => {
-		this.setState({ ticketTitle: e.target.value });
+		this.setState({ ticket_title: e.target.value });
 	};
 
 	ticketDescription = (e) => {
 		this.setState({ description: e.target.value });
 	};
 
-	ticketContributors = () => {
-		let members = document.querySelectorAll(".ticket-mem");
-		this.setState({ assignedDevs: [] });
-		members.forEach((member) => {
-			if (!this.state.assignedDevs.includes(member.value))
-				if (member.hasAttribute("selected")) {
-					this.setState((prevState) => ({
-						assignedDevs: [...prevState.assignedDevs, member.value],
-					}));
-				}
-		});
+	ticketContributors = (callback) => {
+		const members = Array.from(document.querySelectorAll(".ticket-mem"));
+		const assigned_devs = members
+			.filter((member) => member.selected)
+			.map((member) => member.value);
+
+		this.setState({ assigned_devs }, callback);
 	};
 
 	componentDidMount() {
@@ -99,23 +96,24 @@ class NewTicket extends Component {
 
 		let timeEst = document.querySelector("#time-estimate");
 
-		this.state.assignedDevs.forEach((option) => {
+		this.state.assigned_devs.forEach((option) => {
 			if (option) {
 				opCount++;
 			}
 		});
 
 		if (
-			this.state.ticketTitle !== "" &&
+			this.state.ticket_title !== "" &&
 			this.state.description !== "" &&
 			this.state.time !== "" &&
 			opCount > 0
 		) {
-			this.props.edit.state
-				? this.props.editItem("ticket", this.state)
-				: console.log("test");
+			if (this.props.edit.state) {
+				this.props.editItem("ticket", this.state);
+			} else {
+				this.props.createTicket(this.state);
+			}
 
-			this.props.createTicket(this.state);
 			this.props.newFormControl("hidden", false);
 			this.setState({
 				ticketTitle: "",
@@ -125,7 +123,7 @@ class NewTicket extends Component {
 				priority: "immediate",
 				type: "issue",
 				time: "",
-				assignedDevs: [],
+				assigned_devs: [],
 				comments: [],
 			});
 		} else {
@@ -171,7 +169,7 @@ class NewTicket extends Component {
 						id="project-name"
 						onChange={this.ticketName}
 						defaultValue={
-							this.props.edit.state ? this.props.edit.project.ticketTitle : ""
+							this.props.edit.state ? this.props.edit.project.ticket_title : ""
 						}
 					/>
 
@@ -192,8 +190,8 @@ class NewTicket extends Component {
 							{this.props.team.map((member) => {
 								if (this.props.edit.state) {
 									if (
-										this.props.edit.project.assignedDevs.includes(
-											member.firstName + " " + member.lastName
+										this.props.edit.project.assigned_devs.includes(
+											member.firstName + " " + member.lastName,
 										)
 									) {
 										return (
@@ -325,12 +323,12 @@ class NewTicket extends Component {
 						</select>
 					</div>
 
-					<div
+					<button
+						type="button"
 						className="btn"
-						onMouseDown={this.ticketContributors}
-						onMouseUp={this.loadticket}>
+						onClick={() => this.ticketContributors(this.loadticket)}>
 						Submit
-					</div>
+					</button>
 				</form>
 			</div>
 		);

@@ -70,7 +70,7 @@ export default function Project(props) {
 									</div>
 
 									<ul>
-										{project.contributor.map((contributor) => {
+										{project.contributors.map((contributor) => {
 											return props.team.map((member) => {
 												if (
 													member.firstName + " " + member.lastName ===
@@ -131,7 +131,7 @@ export default function Project(props) {
 														<h2
 															onMouseDown={(e) => props.loadTicket(e)}
 															onMouseUp={(e) => changeColor(e)}>
-															{ticket.ticketTitle}
+															{ticket.ticket_title}
 														</h2>
 														<p>{ticket.description}</p>
 														<p>{ticket.author}</p>
@@ -163,7 +163,7 @@ export default function Project(props) {
 								</div>
 							</div>
 
-							{props.loadedTicket.ticketTitle ? (
+							{props.loadedTicket.ticket_title ? (
 								<div className="ticket-info-container">
 									<h2>Selected Ticket Info</h2>
 									<div className="ticket-info">
@@ -174,7 +174,9 @@ export default function Project(props) {
 										</div>
 
 										<div className="ticket-title-answers">
-											<h2 id="ticket-name">{props.loadedTicket.ticketTitle}</h2>
+											<h2 id="ticket-name">
+												{props.loadedTicket.ticket_title}
+											</h2>
 											<h2>{props.loadedTicket.author}</h2>
 											<h2>{props.loadedTicket.description}</h2>
 										</div>
@@ -195,46 +197,28 @@ export default function Project(props) {
 
 										<div className="author-container">
 											<h2>ASSIGNED DEVS</h2>
-											<h2>{props.loadedTicket.assignedDevs.join(", ")}</h2>
+											<h2>{props.loadedTicket.assigned_devs.join(", ")}</h2>
 										</div>
 									</div>
 									<div className="ticket-info">
 										<h2>Comments</h2>
 										<div className="comment-container">
-											{props.loadedTicket.ticketTitle ? (
-												projects.map((project) => {
-													let projectName = props.loadedProject.name;
-													if (project.name === projectName) {
-														return project.tickets.map((ticket) => {
-															let ticketName = props.loadedTicket.ticketTitle;
-															if (ticket.ticketTitle === ticketName) {
-																return ticket.comment_text.map(
-																	(comment, indx) => {
-																		return (
-																			<div className="comment">
-																				<h2>
-																					{ticket.comment_user[indx]} on{" "}
-																					{ticket.comment_date[indx]}
-																				</h2>
-																				<div
-																					className="delete"
-																					onClick={(e) =>
-																						props.commentAction(e, "delete")
-																					}>
-																					X
-																				</div>
-																				<p>{comment}</p>
-																			</div>
-																		);
-																	},
-																);
-															}
-														});
-													}
-												})
-											) : (
-												<div className="waste"></div>
-											)}
+											{props.loadedTicket.comment_text?.map((comment, indx) => (
+												<div className="comment" key={indx}>
+													<h2>
+														{props.loadedTicket.comment_user?.[indx]} on{" "}
+														{props.loadedTicket.comment_date?.[indx]}
+													</h2>
+
+													<div
+														className="delete"
+														onClick={(e) => props.commentAction(e, "delete")}>
+														X
+													</div>
+
+													<p>{comment}</p>
+												</div>
+											))}
 										</div>
 										<div className="ticket-comment">
 											<input type="text" placeholder="Enter Comment" />

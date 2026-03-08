@@ -61,8 +61,8 @@ export default function Dashboard(props) {
 					type === "issue"
 						? issueNum++
 						: type === "bug"
-						? bugNum++
-						: featureNum++;
+							? bugNum++
+							: featureNum++;
 				});
 				let total = types.length;
 				let issuePer = (issueNum / total) * 100;
@@ -73,8 +73,8 @@ export default function Dashboard(props) {
                 #4f7fa9 0 ${issuePer}%,
                 #769cbc ${issuePer}% ${bugPer + issuePer}%, 
                 #9db8cf  ${bugPer + issuePer}% ${
-						featurePer + bugPer + issuePer
-					}%`,
+									featurePer + bugPer + issuePer
+								}%`,
 				};
 			} else if (type === "priority") {
 				let lowNum = 0;
@@ -85,10 +85,10 @@ export default function Dashboard(props) {
 					priority === "low"
 						? lowNum++
 						: priority === "medium"
-						? mediumNum++
-						: priority === "high"
-						? highNum++
-						: immediateNum++;
+							? mediumNum++
+							: priority === "high"
+								? highNum++
+								: immediateNum++;
 				});
 				let total = priorities.length;
 				let lowPer = (lowNum / total) * 100;
@@ -100,11 +100,11 @@ export default function Dashboard(props) {
                 #4f7fa9 0 ${lowPer}%, 
                 #769cbc ${lowPer}% ${mediumPer + lowPer}%, 
                 #9db8cf ${mediumNum + lowPer}% ${
-						highPer + mediumPer + lowPer
-					}%, 
+									highPer + mediumPer + lowPer
+								}%, 
                 #c4d4e2 ${highPer + mediumPer + lowPer}% ${
-						immediatePer + highPer + mediumPer + lowPer
-					}%`,
+									immediatePer + highPer + mediumPer + lowPer
+								}%`,
 				};
 			} else if (type === "status") {
 				let newNum = 0;
@@ -114,8 +114,8 @@ export default function Dashboard(props) {
 					status === "new"
 						? newNum++
 						: status === "in progress"
-						? progressNum++
-						: resolvedNum++;
+							? progressNum++
+							: resolvedNum++;
 				});
 				let total = status.length;
 				let newPer = (newNum / total) * 100;
@@ -127,15 +127,15 @@ export default function Dashboard(props) {
                 #4f7fa9 0 ${newPer}%, 
                 #769cbc ${newPer}% ${progressPer + newPer}%, 
                 #9db8cf ${progressPer + newPer}% ${
-						resolvePer + progressPer + newPer
-					}%`,
+									resolvePer + progressPer + newPer
+								}%`,
 				};
 			}
 		}
 	}
 
 	let listItems = props.projects.map((project) => {
-		let contributors = project.contributor.join(", ");
+		let contributors = project.contributors?.join(", ");
 		// if(project.contributor.includes(props.user.firstName + ' ' + props.user.lastName))  {
 		return (
 			<li

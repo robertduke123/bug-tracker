@@ -82,7 +82,7 @@ class Register extends Component {
 				"https://bug-tracker-backend-jpam.onrender.com/register",
 				{
 					method: "post",
-					headers: { "Content-Type": "application/Json" },
+					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						firstName: firstName,
 						lastName: lastName,
