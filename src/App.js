@@ -73,17 +73,19 @@ class App extends Component {
 						this.loadProjectState();
 						this.loadTeamState();
 						this.routeChange("Dashboard");
+						console.log(this.state);
 					}
-				});
+				})
+				.catch((err) => console.log(err));
 		}
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		// Compare previous state with current state
-		if (prevState !== this.state) {
-			console.log(this.state);
-		}
-	}
+	// componentDidUpdate(prevProps, prevState) {
+	// 	// Compare previous state with current state
+	// 	if (prevState !== this.state) {
+	// 		console.log(this.state);
+	// 	}
+	// }
 
 	loadUser = (data) => {
 		this.setState({
@@ -356,12 +358,14 @@ class App extends Component {
 		let projectName = e.target.innerHTML;
 
 		this.state.projects.map((project) => {
-			return (
-				project.name === projectName &&
-				this.setState({ loadedProject: project })
-			);
+			if (project.name === projectName) {
+				this.setState({ loadedProject: project });
+				if (project.tickets) {
+					this.setState({ loadedTicket: project.tickets[0] });
+				}
+			}
 		});
-		this.setState({ loadedTicket: {} });
+		// this.setState({ loadedTicket: {} });
 	};
 
 	loadTicket = (e) => {

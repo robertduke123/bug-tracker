@@ -4,8 +4,8 @@ export default function Demo(props) {
 	function onDemoSubmit(version) {
 		if (version === "admin") {
 			fetch(
-				// 'http://localhost:3000/signin',
-				"https://bug-tracker-backend-jpam.onrender.com/signin",
+				"http://localhost:4000/signin",
+				// "https://bug-tracker-backend-jpam.onrender.com/signin",
 				{
 					method: "post",
 					headers: { "Content-Type": "application/json" },
@@ -29,8 +29,8 @@ export default function Demo(props) {
 				});
 		} else {
 			fetch(
-				// 'http://localhost:3000/signin',
-				"https://bug-tracker-backend-jpam.onrender.com/signin",
+				"http://localhost:4000/signin",
+				// "https://bug-tracker-backend-jpam.onrender.com/signin",
 				{
 					method: "post",
 					headers: { "Content-Type": "application/json" },

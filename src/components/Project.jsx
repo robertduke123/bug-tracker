@@ -124,7 +124,7 @@ export default function Project(props) {
 											project.tickets.map((ticket) => {
 												return (
 													<li
-														key={`item ${props.projects.indexOf(project) + 1}`}
+														key={`ticket ${props.projects.indexOf(project) + 1}`}
 														className="ticket-item no">
 														<h2
 															onMouseDown={(e) => props.loadTicket(e)}
@@ -195,14 +195,14 @@ export default function Project(props) {
 
 										<div className="author-container">
 											<h2>ASSIGNED DEVS</h2>
-											<h2>{props.loadedTicket.assigned_devs.join(", ")}</h2>
+											<h2>{props.loadedTicket.assigned_devs?.join(", ")}</h2>
 										</div>
 									</div>
 									<div className="ticket-info">
 										<h2>Comments</h2>
 										<div className="comment-container">
 											{props.loadedTicket.comment_text?.map((comment, indx) => (
-												<div className="comment" key={indx}>
+												<div className="comment" key={"comment" + indx}>
 													<h2>
 														{props.loadedTicket.comment_user?.[indx]} on{" "}
 														{props.loadedTicket.comment_date?.[indx]}
