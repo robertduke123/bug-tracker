@@ -11,13 +11,15 @@ export default function Demo(props) {
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						email: "admin",
-						password: "N/A",
+						password: "admin",
 					}),
 				},
 			)
 				.then((res) => res.json())
 				.then((data) => {
 					localStorage.setItem("refreshToken", data.refresh);
+					console.log(data);
+
 					if (data.userData.id) {
 						props.loadUser(data.userData);
 						props.loadProjectState();
@@ -34,7 +36,7 @@ export default function Demo(props) {
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
 						email: "employee",
-						password: "N/A",
+						password: "employee",
 					}),
 				},
 			)
