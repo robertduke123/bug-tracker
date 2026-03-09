@@ -48,7 +48,7 @@ class App extends Component {
 	componentDidMount() {
 		const refresh = localStorage.getItem("refreshToken");
 
-		if (refresh) {
+		if (refresh.length > 0) {
 			fetch(
 				"https://bug-tracker-backend-jpam.onrender.com/token",
 				// "http://localhost:4000/token",
@@ -80,12 +80,12 @@ class App extends Component {
 		}
 	}
 
-	// componentDidUpdate(prevProps, prevState) {
-	// 	// Compare previous state with current state
-	// 	if (prevState !== this.state) {
-	// 		console.log(this.state);
-	// 	}
-	// }
+	componentDidUpdate(prevProps, prevState) {
+		// Compare previous state with current state
+		if (prevState !== this.state) {
+			console.log(this.state);
+		}
+	}
 
 	loadUser = (data) => {
 		this.setState({
@@ -529,7 +529,7 @@ class App extends Component {
 			allTickets.splice(ticketIndex, 1);
 			this.setState({ projects: allProjects });
 
-			this.setState({ loadedTicket: {} });
+			this.setState({ loadedTicket: allTickets[ticketIndex - 1] });
 		} else if (version === "member") {
 			project = document.querySelector(".project-title h1").innerHTML;
 			member = e.target.parentNode.parentNode.firstChild.innerHTML;
@@ -793,13 +793,13 @@ class App extends Component {
 
 	commentAction = (e, action) => {
 		let project = document.querySelector(".project-title h1").innerHTML;
-		let ticket = document.querySelector("#ticket-name").innerHTML;
+		let ticket = this.state.loadedTicket;
 		let projectIndex = this.state.projects.findIndex((object) => {
 			return object.name === project;
 		});
 		let ticketIndex = this.state.projects[projectIndex].tickets.findIndex(
 			(object) => {
-				return object.ticket_title === ticket;
+				return object.ticket_title === ticket.ticket_title;
 			},
 		);
 		let comment;
@@ -815,13 +815,15 @@ class App extends Component {
 		let projectState = allProjects[projectIndex];
 		let allTickets = projectState.tickets;
 		let ticketState = projectState.tickets[ticketIndex];
-		let commentsUsers = ticketState.comment_user || [];
-		let commentsDates = ticketState.comment_date || [];
-		let commentsTexts = ticketState.comment_text || [];
+		let commentsUsers = ticket.comment_user || [];
+		let commentsDates = ticket.comment_date || [];
+		let commentsTexts = ticket.comment_text || [];
 
 		let commentIndex = commentsTexts.findIndex((object) => {
 			return object === deletion;
 		});
+
+		console.log(ticket);
 
 		action === "add"
 			? fetch(
@@ -831,7 +833,7 @@ class App extends Component {
 						method: "put",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
-							ticketTitle: ticket,
+							ticketTitle: ticket.ticket_title,
 							user: this.state.user.firstName + " " + this.state.user.lastName,
 							date: new Date().toString().slice(0, -40),
 							comment: comment,
@@ -870,15 +872,15 @@ class App extends Component {
 		}
 
 		let newTicketState = {
-			id: ticketState.id,
-			ticket_title: ticketState.ticket_title,
-			author: ticketState.author,
-			description: ticketState.description,
-			status: ticketState.status,
-			priority: ticketState.priority,
-			type: ticketState.type,
-			time: ticketState.time,
-			assignedDevs: ticketState.assigned_devs,
+			id: ticket.id,
+			ticket_title: ticket.ticket_title,
+			author: ticket.author,
+			description: ticket.description,
+			status: ticket.status,
+			priority: ticket.priority,
+			type: ticket.type,
+			time: ticket.time,
+			assignedDevs: ticket.assigned_devs,
 			comment_user: commentsUsers,
 			comment_date: commentsDates,
 			comment_text: commentsTexts,

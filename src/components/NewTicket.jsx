@@ -32,7 +32,9 @@ class NewTicket extends Component {
 				type: this.props.edit.project.type,
 				time: this.props.edit.project.time,
 				assigned_devs: this.props.edit.project.assigned_devs,
-				comments: this.props.edit.project.comments,
+				comment_user: this.props.edit.project.comment_user,
+				comment_date: this.props.edit.project.comment_date,
+				comment_text: this.props.edit.project.comment_text,
 			};
 		} else {
 			this.state = {
@@ -44,7 +46,9 @@ class NewTicket extends Component {
 				type: "issue",
 				time: "",
 				assigned_devs: [],
-				comments: [],
+				comment_user: [],
+				comment_date: [],
+				comment_text: [],
 			};
 		}
 	}
@@ -124,7 +128,9 @@ class NewTicket extends Component {
 				type: "issue",
 				time: "",
 				assigned_devs: [],
-				comments: [],
+				comment_user: [],
+				comment_date: [],
+				comment_text: [],
 			});
 		} else {
 			if (!name.value) {
