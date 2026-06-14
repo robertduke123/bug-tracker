@@ -42,8 +42,8 @@ class Profile extends Component {
 		let confirm = document.querySelector("#confirm").value;
 
 		fetch(
-			// 'http://localhost:3000/signin',
-			"https://bug-tracker-backend-jpam.onrender.com/signin",
+			"http://localhost:3000/signin",
+			// "https://bug-tracker-backend-jpam.onrender.com/signin",
 			{
 				method: "post",
 				headers: { "Content-Type": "application/Json" },

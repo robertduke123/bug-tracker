@@ -14,7 +14,12 @@ export default function Navbar(props) {
 					style={{ cursor: "pointer" }}>
 					User Profile <img src={accountImg} alt="account" />
 				</div>
-				<div className="btn" onClick={() => props.routeChange("signin")}>
+				<div
+					className="btn"
+					onClick={() => {
+						localStorage.removeItem("refreshToken");
+						props.routeChange("signin");
+					}}>
 					Log Out
 				</div>
 			</div>

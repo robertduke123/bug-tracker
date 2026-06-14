@@ -48,10 +48,10 @@ class App extends Component {
 	componentDidMount() {
 		const refresh = localStorage.getItem("refreshToken");
 
-		if (refresh.length > 0) {
+		if (refresh?.length > 0) {
 			fetch(
-				"https://bug-tracker-backend-jpam.onrender.com/token",
-				// "http://localhost:4000/token",
+				// "https://bug-tracker-backend-jpam.onrender.com/token",
+				"http://localhost:4000/token",
 				{
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
@@ -102,8 +102,8 @@ class App extends Component {
 
 	loadProjectState = () => {
 		fetch(
-			// 'http://localhost:3000/get_projects',
-			"https://bug-tracker-backend-jpam.onrender.com/get_projects",
+			"http://localhost:4000/get_projects",
+			// "https://bug-tracker-backend-jpam.onrender.com/get_projects",
 		)
 			.then((res) => res.json())
 			.then((data) => {
@@ -116,8 +116,8 @@ class App extends Component {
 
 	loadTeamState = () => {
 		fetch(
-			// 'http://localhost:3000/team',
-			"https://bug-tracker-backend-jpam.onrender.com/team",
+			"http://localhost:3000/team",
+			// "https://bug-tracker-backend-jpam.onrender.com/team",
 		)
 			.then((res) => res.json())
 			.then((data) => {
@@ -212,8 +212,8 @@ class App extends Component {
 
 	editUser = (info) => {
 		fetch(
-			// 'http://localhost:3000/signin',
-			"https://bug-tracker-backend-jpam.onrender.com/signin",
+			"http://localhost:3000/signin",
+			// "https://bug-tracker-backend-jpam.onrender.com/signin",
 			{
 				method: "put",
 				headers: { "Content-Type": "application/json" },
@@ -246,8 +246,8 @@ class App extends Component {
 				);
 				contributors.push(info.firstName + " " + info.lastName);
 				fetch(
-					// 'http://localhost:3000/edit_project',
-					"https://bug-tracker-backend-jpam.onrender.com/edit_project",
+					"http://localhost:3000/edit_project",
+					// "https://bug-tracker-backend-jpam.onrender.com/edit_project",
 					{
 						method: "put",
 						headers: { "Content-Type": "application/json" },
@@ -279,8 +279,8 @@ class App extends Component {
 					assignedDevs.push(info.firstName + " " + info.lastName);
 
 					fetch(
-						// 'http://localhost:3000/edit_ticket',
-						"https://bug-tracker-backend-jpam.onrender.com/edit_ticket",
+						"http://localhost:3000/edit_ticket",
+						// "https://bug-tracker-backend-jpam.onrender.com/edit_ticket",
 						{
 							method: "put",
 							headers: { "Content-Type": "application/json" },
@@ -312,8 +312,8 @@ class App extends Component {
 
 	editPassword = (old, newP) => {
 		fetch(
-			// 'http://localhost:3000/edit_password',
-			"https://bug-tracker-backend-jpam.onrender.com/edit_password",
+			"http://localhost:3000/edit_password",
+			// "https://bug-tracker-backend-jpam.onrender.com/edit_password",
 			{
 				method: "put",
 				headers: { "Content-Type": "application/json" },
@@ -332,8 +332,8 @@ class App extends Component {
 
 	createProject = (projectDetails) => {
 		fetch(
-			// 'http://localhost:3000/projects',
-			"https://bug-tracker-backend-jpam.onrender.com/projects",
+			"http://localhost:3000/projects",
+			// "https://bug-tracker-backend-jpam.onrender.com/projects",
 			{
 				method: "put",
 				headers: { "Content-Type": "application/json" },
@@ -410,8 +410,8 @@ class App extends Component {
 		projectState.contributors = projectMembers;
 
 		fetch(
-			// 'http://localhost:3000/edit_project',
-			"https://bug-tracker-backend-jpam.onrender.com/edit_project",
+			"http://localhost:3000/edit_project",
+			// "https://bug-tracker-backend-jpam.onrender.com/edit_project",
 			{
 				method: "put",
 				headers: { "Content-Type": "application/json" },
@@ -444,8 +444,8 @@ class App extends Component {
 		console.log("test");
 
 		fetch(
-			// 'http://localhost:3000/tickets',
-			"https://bug-tracker-backend-jpam.onrender.com/tickets",
+			"http://localhost:3000/tickets",
+			// "https://bug-tracker-backend-jpam.onrender.com/tickets",
 			{
 				method: "put",
 				headers: { "Content-Type": "application/json" },
@@ -486,8 +486,8 @@ class App extends Component {
 			});
 
 			fetch(
-				// 'http://localhost:3000/delete_project',
-				"https://bug-tracker-backend-jpam.onrender.com/delete_project",
+				"http://localhost:3000/delete_project",
+				// "https://bug-tracker-backend-jpam.onrender.com/delete_project",
 				{
 					method: "delete",
 					headers: { "Content-Type": "application/json" },
@@ -513,8 +513,8 @@ class App extends Component {
 			});
 
 			fetch(
-				// 'http://localhost:3000/delete_ticket',
-				"https://bug-tracker-backend-jpam.onrender.com/delete_ticket",
+				"http://localhost:3000/delete_ticket",
+				// "https://bug-tracker-backend-jpam.onrender.com/delete_ticket",
 				{
 					method: "delete",
 					headers: { "Content-Type": "application/json" },
@@ -541,8 +541,8 @@ class App extends Component {
 			allMembers.splice(memberIndex, 1);
 
 			fetch(
-				// 'http://localhost:3000/edit_project',
-				"https://bug-tracker-backend-jpam.onrender.com/edit_project",
+				"http://localhost:3000/edit_project",
+				// "https://bug-tracker-backend-jpam.onrender.com/edit_project",
 				{
 					method: "put",
 					headers: { "Content-Type": "application/json" },
@@ -566,8 +566,8 @@ class App extends Component {
 			});
 
 			fetch(
-				// 'http://localhost:3000/delete_team',
-				"https://bug-tracker-backend-jpam.onrender.com/delete_team",
+				"http://localhost:3000/delete_team",
+				// "https://bug-tracker-backend-jpam.onrender.com/delete_team",
 				{
 					method: "delete",
 					headers: { "Content-Type": "application/json" },
@@ -608,8 +608,8 @@ class App extends Component {
 			});
 			project = allProjects[projectIndex];
 			fetch(
-				// 'http://localhost:3000/edit_project',
-				"https://bug-tracker-backend-jpam.onrender.com/edit_project",
+				"http://localhost:3000/edit_project",
+				// "https://bug-tracker-backend-jpam.onrender.com/edit_project",
 				{
 					method: "put",
 					headers: { "Content-Type": "application/json" },
@@ -643,8 +643,8 @@ class App extends Component {
 			console.log(project, projectIndex, ticketIndex, ticket);
 
 			fetch(
-				// 'http://localhost:3000/edit_ticket',
-				"https://bug-tracker-backend-jpam.onrender.com/edit_ticket",
+				"http://localhost:3000/edit_ticket",
+				// "https://bug-tracker-backend-jpam.onrender.com/edit_ticket",
 				{
 					method: "put",
 					headers: { "Content-Type": "application/json" },
@@ -682,8 +682,8 @@ class App extends Component {
 			console.log(allMembers[memberIndex]);
 
 			fetch(
-				// 'http://localhost:3000/edit_team',
-				"https://bug-tracker-backend-jpam.onrender.com/edit_team",
+				"http://localhost:3000/edit_team",
+				// "https://bug-tracker-backend-jpam.onrender.com/edit_team",
 				{
 					method: "put",
 					headers: { "Content-Type": "application/json" },
@@ -720,8 +720,8 @@ class App extends Component {
 					);
 					contributors.push(state.firstName + " " + state.lastName);
 					fetch(
-						// 'http://localhost:3000/edit_project',
-						"https://bug-tracker-backend-jpam.onrender.com/edit_project",
+						"http://localhost:3000/edit_project",
+						// "https://bug-tracker-backend-jpam.onrender.com/edit_project",
 						{
 							method: "put",
 							headers: { "Content-Type": "application/json" },
@@ -756,8 +756,8 @@ class App extends Component {
 						assignedDevs.push(state.firstName + " " + state.lastName);
 
 						fetch(
-							// 'http://localhost:3000/edit_ticket',
-							"https://bug-tracker-backend-jpam.onrender.com/edit_ticket",
+							"http://localhost:3000/edit_ticket",
+							// "https://bug-tracker-backend-jpam.onrender.com/edit_ticket",
 							{
 								method: "put",
 								headers: { "Content-Type": "application/json" },
@@ -827,8 +827,8 @@ class App extends Component {
 
 		action === "add"
 			? fetch(
-					// 'http://localhost:3000/comment',
-					"https://bug-tracker-backend-jpam.onrender.com/comments",
+					"http://localhost:3000/comment",
+					// "https://bug-tracker-backend-jpam.onrender.com/comments",
 					{
 						method: "put",
 						headers: { "Content-Type": "application/json" },
@@ -843,8 +843,8 @@ class App extends Component {
 					.then(console.log)
 					.catch(console.log)
 			: fetch(
-					// 'http://localhost:3000/delete_comment',
-					"https://bug-tracker-backend-jpam.onrender.com/delete_comment",
+					"http://localhost:3000/delete_comment",
+					// "https://bug-tracker-backend-jpam.onrender.com/delete_comment",
 					{
 						method: "put",
 						headers: { "Content-Type": "application/json" },
